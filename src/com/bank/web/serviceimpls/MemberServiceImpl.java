@@ -13,30 +13,37 @@ import com.bank.web.services.MemberService;
 public class MemberServiceImpl implements MemberService{
 
 	public MemberDao dao;
+	private List<CustomerBean> cMember;
+	private List<EmployeeBean> eMember;
 	
 	public MemberServiceImpl() {
 		dao = new MemberDaoImpl();
+		cMember = dao.getCustomerFile();
+		eMember = dao.getEmployeeFile();
 	}
 	
 	@Override
 	public void join(CustomerBean param) {
 		dao.insertMember(param);
+		cMember = dao.getCustomerFile();
 	}
 
 	@Override
 	public void register(EmployeeBean param) {
+		dao.insertEmployee(param);
+		eMember = dao.getEmployeeFile();
 	}
 
 	@Override
 	public List<MemberBean> findByName(String name) {
 		List<MemberBean> m = new ArrayList<>();
 		int num1 = 0,num2 = 0;
-		for(CustomerBean c : dao.getCustomerFile()) {
+		for(CustomerBean c : cMember) {
 			if(name.equals(c.getName())) {
 				num1++;
 			}
 		}
-		for(EmployeeBean e : dao.getEmployeeFile()) {
+		for(EmployeeBean e : eMember) {
 			if(name.equals(e.getName())) {
 				num2++;
 			}
@@ -44,14 +51,14 @@ public class MemberServiceImpl implements MemberService{
 		int num3 = num1+num2; 
 		num1 = 0; 
 		num2 = 0;
-		for(CustomerBean c : dao.getCustomerFile()) {
+		for(CustomerBean c : cMember) {
 			if(name.equals(c.getName())) {
 				m.add(c);
 				num1++;
 			}
 			if(num1 == num3) return m;
 		}
-		for(EmployeeBean e : dao.getEmployeeFile()) {
+		for(EmployeeBean e : eMember) {
 			if(name.equals(e.getName())) {
 				m.add(e);
 				num2++;
@@ -65,7 +72,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public MemberBean findById(String id) {
 		MemberBean m = new MemberBean();
-		for(CustomerBean c : dao.getCustomerFile()) {
+		for(CustomerBean c : cMember) {
 			if(id.equals(c.getId())) {
 				m = c;
 				break;
@@ -110,36 +117,39 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void updatePass(MemberBean param) {
 		MemberBean m = findById(param.getId());
-		if(m.getPass().equals(param.getPass().split(",")[0]))
-		m.setPass(param.getPass().split(",")[1]);
+		if (m.getPass().equals(param.getPass().split(",")[0])) {
+			m.setPass(param.getPass().split(",")[1]);
+		}
+		cMember = dao.getCustomerFile();
+		eMember = dao.getEmployeeFile();
 	}
 
 	@Override
 	public boolean deleteMember(MemberBean param) {
 		MemberBean m = findById(param.getId());
-		return dao.getEmployeeFile().contains(m) ?
-				dao.getCustomerFile().remove(m) : dao.getEmployeeFile().remove(m);
+		return eMember.contains(m) ?
+				cMember.remove(m) : eMember.remove(m);
 	}
 
 	@Override
 	public int countCustomers() {
-		return dao.getCustomerFile().size();
+		return cMember.size();
 	}
 
 	@Override
 	public int countAdmins() {
-		return dao.getEmployeeFile().size();
+		return eMember.size();
 	}
 
 	@Override
 	public List<CustomerBean> findAllCustomers() {
-		return dao.getCustomerFile();
+		return cMember;
 	}
 
 	@Override
 	public List<EmployeeBean> findAllAdmins() {
 		// TODO Auto-generated method stub
-		return dao.getEmployeeFile();
+		return eMember;
 	}
 
 	@Override

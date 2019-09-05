@@ -2,7 +2,7 @@ package com.bank.web.domains;
 
 import java.io.Serializable;
 
-public class AccountBean implements Serializable{
+public class AccountBean extends CustomerBean implements Serializable{
 	/**
 	 * 
 	 */

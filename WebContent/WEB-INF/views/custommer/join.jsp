@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div>
-		<h2>통장개설</h2>
+		<h2>회원가입</h2>
 
 	<form id = "account_form" action="<%=request.getContextPath()%>/member.do">
 		아이디 <input type="text" 	name="id"/> <br/>

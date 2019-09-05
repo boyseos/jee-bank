@@ -16,14 +16,22 @@
 	<h4>민번		${customer.ssn}</h4> <br />
 	<h4>신용도	${customer.credit}</h4> <br />
 	<form id="loginpage" action="action="<%=request.getContextPath()%>/member.do">
-		<input type="text" name="" />
-		<input type="text" name="" />
-		<input type="submit" name="" />
+		비번변경<input type="text" name="changepass" />
+		멤버삭제<input type="text" name="deletemember" />
+		<input type="hidden" name="action" value="loginpage" />
+		<input type="submit" value="멤버정보변경" />
 	</form>
 	<form id="accountpage" action="action="<%=request.getContextPath()%>/account.do">
-	
+		통장개설<input type="number" name="crateaccount" />
+		입금<input type="number" name="depositMoney" />
+		출금<input type="number" name="withdrawMoney" />		
+		<input type="hidden" name="action" value="accountpage" />
+		<input type="submit" value = "개설"/>
 	</form>
 	<script>
+	$('#loginpage').submit(function(){
+		
+	})
 	</script>
 </body>
 </html>
