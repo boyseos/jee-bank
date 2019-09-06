@@ -12,19 +12,19 @@
 	<div>
 		<h2>회원가입</h2>
 
-	<form id = "account_form" action="<%=request.getContextPath()%>/member.do">
+	<form id="customer_form" action="<%=request.getContextPath()%>/customer.do">
 		아이디 <input type="text" 	name="id"/> <br/>
 		비밀번호<input type="text" 	name="pass"/> <br/>
 		이름<input type="text" 		name="name"/> <br/>
 		주민번호<input type="text"	name="ssn"/> <br/>
 		신용등급<input type="text"	name="credit"/> <br/>
 		<input type="hidden" name="action" value="join" />
-		<input type="hidden" name="dest" value="login" />
+		<input type="hidden" name="page" value="login" />
 		<input type="submit" id="btn" value="전송"/>
 	</form>	
 </div>
 <script>
-$('#account_form').submit(function(){
+$('#customer_form').submit(function(){
 	alert('통장테스트');
 });
 </script>

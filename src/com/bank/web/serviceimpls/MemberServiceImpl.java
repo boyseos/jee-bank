@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.bank.web.daoImpls.MemberDaoImpl;
 import com.bank.web.daos.MemberDao;
+import com.bank.web.domains.AccountBean;
 import com.bank.web.domains.CustomerBean;
 import com.bank.web.domains.MemberBean;
 import com.bank.web.services.MemberService;
@@ -78,12 +79,12 @@ public class MemberServiceImpl implements MemberService{
 				break;
 			}
 		}
-//		for(EmployeeBean e : dao.getEmployeeFile()) {
-//			if(id.equals(e.getId())) {
-//				m = e;
-//				break;
-//			}
-//		}
+		for(EmployeeBean e : eMember) {
+			if(id.equals(e.getId())) {
+				m = e;
+				break;
+			}
+		}
 		return m;
 	}
 
@@ -119,16 +120,16 @@ public class MemberServiceImpl implements MemberService{
 		MemberBean m = findById(param.getId());
 		if (m.getPass().equals(param.getPass().split(",")[0])) {
 			m.setPass(param.getPass().split(",")[1]);
+			dao.reWrite(cMember);
+			System.out.println("안오냐?");
 		}
-		cMember = dao.getCustomerFile();
-		eMember = dao.getEmployeeFile();
 	}
 
 	@Override
 	public boolean deleteMember(MemberBean param) {
 		MemberBean m = findById(param.getId());
 		return eMember.contains(m) ?
-				cMember.remove(m) : eMember.remove(m);
+				eMember.remove(m) : cMember.remove(m);
 	}
 
 	@Override

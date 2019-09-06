@@ -11,4 +11,5 @@ public interface MemberDao {
 	public CustomerBean login(CustomerBean param);
 	public List<CustomerBean> getCustomerFile();
 	public List<EmployeeBean> getEmployeeFile();
+	public void reWrite(List<CustomerBean> param);
 }

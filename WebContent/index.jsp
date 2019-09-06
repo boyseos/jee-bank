@@ -26,11 +26,11 @@
 	<script>
 	$('#btn').click(function(){
 		alert('예약석');
-		location.assign('<%=request.getContextPath()%>/member.do?action=move&dest=login');
+		location.assign('<%=request.getContextPath()%>/customer.do?page=login');
 	});
 	$('#joinlink').click(function(){
 		alert('만석');
-		location.assign('<%=request.getContextPath()%>/member.do?action=move&dest=join');
+		location.assign('<%=request.getContextPath()%>/customer.do?page=join');
 	});
 	</script>
 </body>

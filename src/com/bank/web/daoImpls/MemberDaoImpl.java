@@ -34,8 +34,20 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public void insertEmployee(EmployeeBean param) {
-		// TODO Auto-generated method stub
-		
+		try {
+			BufferedWriter writer = new BufferedWriter(
+			new FileWriter(new File(Constants.SETFILE_PATH+"employees0905.txt"),true));
+			writer.write(String.format("%s_%s_%s_%s_%s\n"
+					,param.getId()
+					,param.getPass()
+					,param.getName()
+					,param.getSsn()
+					,param.getSabun()));
+			writer.flush();
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -66,14 +78,53 @@ public class MemberDaoImpl implements MemberDao{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 System.out.println(cba);
 		return cba;
 	}
 
 	@Override
 	public List<EmployeeBean> getEmployeeFile() {
-		// TODO Auto-generated method stub
-		return null;
+		List<EmployeeBean> eba = new ArrayList<EmployeeBean>();
+		try {
+			String result = "";
+			EmployeeBean temp = null;
+			BufferedReader reader = new BufferedReader(
+					new FileReader(new File(Constants
+							.SETFILE_PATH+"employees0905.txt")));
+			while((result = reader.readLine()) != null) {
+				temp = new EmployeeBean();
+				 temp.setId(result.split("_")[0]);
+				 temp.setPass(result.split("_")[1]);
+				 temp.setName(result.split("_")[2]);
+				 temp.setSsn(result.split("_")[3]);
+				 temp.setSabun(result.split("_")[4]);
+				 eba.add(temp);	
+			}
+			reader.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return eba;
+	}
+	
+	public void reWrite(List<CustomerBean> param) {
+		try {
+			BufferedWriter writer = new BufferedWriter(
+					new FileWriter(new File(Constants
+							.SETFILE_PATH + "customers0905.txt")));
+			for (CustomerBean temp : param) {
+				writer.write(String.format("%s_%s_%s_%s_%s\n"
+						, temp.getId()
+						, temp.getPass()
+						, temp.getName()
+						, temp.getSsn()
+						, temp.getCredit()));
+				System.out.println(temp.getSsn());
+			}
+			writer.flush();
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
