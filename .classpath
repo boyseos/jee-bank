@@ -13,8 +13,8 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/Users/user/eclipse_jee/jstl.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/user/eclipse_jee/standard.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/user/eclipse/jee-2019-06/eclipse-jEE/lombok.jar"/>
+	<classpathentry exported="true" kind="lib" path="E:/공부/Java/standard.jar"/>
+	<classpathentry exported="true" kind="lib" path="E:/공부/Java/jstl.jar"/>
+	<classpathentry exported="true" kind="lib" path="E:/공부/Java/lombok.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
