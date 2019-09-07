@@ -10,9 +10,9 @@ public class Constants {
 	final public static String VIEW_PATH = "WEB-INF/views/%s/%s.jsp";
 	public Constants() {
 		if(new File("e:"+File.separator+
-				"공부"+File.separator+"java").isDirectory()) {
+			"study"+File.separator).isDirectory()) {
 			SETFILE_PATH = "e:"+File.separator+
-					"공부"+File.separator+"java"+File.separator+
+					"study"+File.separator+"java"+File.separator+
 					"jee-bank"+File.separator+
 					"WebContent"+File.separator+"resources"+File.separator+"text"+File.separator;
 		}

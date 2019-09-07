@@ -13,8 +13,8 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="E:/공부/Java/standard.jar"/>
-	<classpathentry exported="true" kind="lib" path="E:/공부/Java/jstl.jar"/>
-	<classpathentry exported="true" kind="lib" path="E:/공부/Java/lombok.jar"/>
+	<classpathentry exported="true" kind="lib" path="E:/Study/Java/standard.jar"/>
+	<classpathentry exported="true" kind="lib" path="E:/Study/Java/jstl.jar"/>
+	<classpathentry exported="true" kind="lib" path="E:/Study/Java/lombok.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

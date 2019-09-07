@@ -16,6 +16,7 @@ public class MemberServiceImpl implements MemberService{
 	public MemberDao dao;
 	private List<CustomerBean> cMember;
 	private List<EmployeeBean> eMember;
+	private MemberBean loginMember;
 	
 	public MemberServiceImpl() {
 		dao = new MemberDaoImpl();
@@ -25,14 +26,20 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	public void join(CustomerBean param) {
+		if(existId(param.getId())) {
+			return;
+		}
 		dao.insertMember(param);
-		cMember = dao.getCustomerFile();
+		cMember.add(param);
 	}
 
 	@Override
 	public void register(EmployeeBean param) {
+		if(existId(param.getId())) {
+			return;
+		}
 		dao.insertEmployee(param);
-		eMember = dao.getEmployeeFile();
+		eMember.add(param);
 	}
 
 	@Override
@@ -72,54 +79,43 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public MemberBean findById(String id) {
-		MemberBean m = new MemberBean();
 		for(CustomerBean c : cMember) {
 			if(id.equals(c.getId())) {
-				m = c;
-				break;
+				return c; // 추후 배울 시스템에선 바로 리턴 때리는것이 안좋을지 모르나. 현재 상황에선 이게 효율적임..
 			}
 		}
 		for(EmployeeBean e : eMember) {
 			if(id.equals(e.getId())) {
-				m = e;
-				break;
+				return e;
 			}
 		}
-		return m;
+		return null;
 	}
 
 	@Override
 	public boolean login(MemberBean param) {
-		return findById(param.getId()).getPass().equals(param.getPass());
-//		boolean flag = false;
-//		MemberBean m = new MemberBean();
-//		for(CustomerBean c : cMembers) {
-//			if(m.equals(c.getId())) {
-//				flag = true;
-//				break;
-//			}
-//		}
-//		for(EmployeeBean e : dao.getEmployeeFile()) {
-//			if(m.equals(e.getId())) {
-//				flag = true;
-//				break;
-//			}
-//		}
-//		return flag;
+		boolean result = false;
+		MemberBean m = findById(param.getId());
+		if(nullCheck(m)) {
+			return result;
+		}
+		if(m.getPass().equals(param.getPass())) {
+			loginMember = m;
+			result = true;
+		}
+		return result;
 	}
 
 	@Override
 	public boolean existId(String id) {
-		return findById(id) != null;
-//		MemberBean m = findById(id);
-//		return dao.getEmployeeFile().contains(m) || cMembers.contains(m);
+		MemberBean m = findById(id);
+		return eMember.contains(m) || cMember.contains(m);
 	}
 
 	@Override
 	public void updatePass(MemberBean param) {
-		MemberBean m = findById(param.getId());
-		if (m.getPass().equals(param.getPass().split(",")[0])) {
-			m.setPass(param.getPass().split(",")[1]);
+		if (loginMember.getPass().equals(param.getPass().split(",")[0])) {
+			loginMember.setPass(param.getPass().split(",")[1]);
 			dao.reWrite(cMember);
 			System.out.println("안오냐?");
 		}
@@ -127,9 +123,17 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public boolean deleteMember(MemberBean param) {
-		MemberBean m = findById(param.getId());
-		return eMember.contains(m) ?
-				eMember.remove(m) : cMember.remove(m);
+		boolean result = false;
+		if(eMember.contains(loginMember)) {
+			eMember.remove(loginMember);
+			loginMember = null;
+			result = true;
+		}else if(cMember.contains(loginMember)) {
+			cMember.remove(loginMember);
+			loginMember = null;
+			result = true;
+		}
+		return result;
 	}
 
 	@Override
@@ -157,6 +161,11 @@ public class MemberServiceImpl implements MemberService{
 	public CustomerBean loginD(MemberBean param) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean nullCheck(MemberBean param) {
+		return param == null;
 	}
 
 }

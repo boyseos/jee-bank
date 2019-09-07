@@ -18,7 +18,7 @@ public class MemberDaoImpl implements MemberDao{
 	public void insertMember(CustomerBean param) {
 		try {
 			BufferedWriter writer = new BufferedWriter(
-			new FileWriter(new File(Constants.SETFILE_PATH+"customers0905.txt"),true));
+			new FileWriter(new File(new Constants().SETFILE_PATH+"customers0905.txt"),true));
 			writer.write(String.format("%s_%s_%s_%s_%s\n"
 					,param.getId()
 					,param.getPass()
@@ -36,7 +36,7 @@ public class MemberDaoImpl implements MemberDao{
 	public void insertEmployee(EmployeeBean param) {
 		try {
 			BufferedWriter writer = new BufferedWriter(
-			new FileWriter(new File(Constants.SETFILE_PATH+"employees0905.txt"),true));
+			new FileWriter(new File(new Constants().SETFILE_PATH+"employees0905.txt"),true));
 			writer.write(String.format("%s_%s_%s_%s_%s\n"
 					,param.getId()
 					,param.getPass()
@@ -62,7 +62,7 @@ public class MemberDaoImpl implements MemberDao{
 			String result = "";
 			CustomerBean temp = null;
 			BufferedReader reader = new BufferedReader(
-					new FileReader(new File(Constants
+					new FileReader(new File(new Constants()
 							.SETFILE_PATH+"customers0905.txt")));
 			while((result = reader.readLine()) != null) {
 				temp = new CustomerBean();
@@ -88,7 +88,7 @@ public class MemberDaoImpl implements MemberDao{
 			String result = "";
 			EmployeeBean temp = null;
 			BufferedReader reader = new BufferedReader(
-					new FileReader(new File(Constants
+					new FileReader(new File(new Constants()
 							.SETFILE_PATH+"employees0905.txt")));
 			while((result = reader.readLine()) != null) {
 				temp = new EmployeeBean();
@@ -109,7 +109,7 @@ public class MemberDaoImpl implements MemberDao{
 	public void reWrite(List<CustomerBean> param) {
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new FileWriter(new File(Constants
+					new FileWriter(new File(new Constants()
 							.SETFILE_PATH + "customers0905.txt")));
 			for (CustomerBean temp : param) {
 				writer.write(String.format("%s_%s_%s_%s_%s\n"

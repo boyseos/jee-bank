@@ -7,19 +7,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.bank.web.daos.AccountDao;
 import com.bank.web.domains.AccountBean;
+import com.bank.web.pool.Constants;
 
 public class AccountDaoImpl implements AccountDao{
-	final public static String SETFILE_PATH = "C:"+File.separator+
-			"Users"+File.separator+"user"+File.separator+
-			"eclipse_jee"+File.separator+"jee-bitcamp"+File.separator+
-			"WebContent"+File.separator+"resources"+File.separator+"txt"+File.separator;
 	@Override
 	public void setFile(List<AccountBean> param) {		
 		try {
-			File file = new File(SETFILE_PATH + "list.txt");
+			File file = new File(new Constants().SETFILE_PATH + "list.txt");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
 			String msg = "";
 			for(AccountBean a : param) {
@@ -40,7 +36,7 @@ public class AccountDaoImpl implements AccountDao{
 		List<AccountBean> acl = new ArrayList<AccountBean>();
 		try {
 		String msg ="";
-		File file = new File(SETFILE_PATH + "list.txt");
+		File file = new File(Constants.SETFILE_PATH + "list.txt");
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		String[] msgArray = new String[3];
 		

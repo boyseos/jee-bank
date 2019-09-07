@@ -6,6 +6,7 @@ import java.util.List;
 import com.bank.web.domains.CustomerBean;
 import com.bank.web.domains.MemberBean;
 
+
 public interface MemberService {
 	public void join(CustomerBean param);
 	public void register(EmployeeBean param);
@@ -20,4 +21,5 @@ public interface MemberService {
 	public boolean existId(String id);
 	public void updatePass(MemberBean param);
 	public boolean deleteMember(MemberBean param);
+	public boolean nullCheck(MemberBean param);
 }

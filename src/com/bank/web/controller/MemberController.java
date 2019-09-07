@@ -41,11 +41,10 @@ public class MemberController extends HttpServlet {
 			if(service.login(mb)) {
 				request.setAttribute("customer",service.findById(mb.getId()));
 			}else {
-				System.out.println("로그인 실패");
 				Receiver.cmd.setView(
 						String.format(Constants.VIEW_PATH
 								,Receiver.cmd.getDomain()
-								,Receiver.cmd.getPage()));
+								,"login"));
 			}
 			break;
 		case "join":
