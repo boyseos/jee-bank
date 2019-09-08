@@ -10,6 +10,7 @@ import java.util.List;
 import com.bank.web.daos.MemberDao;
 import com.bank.web.domains.CustomerBean;
 import com.bank.web.domains.EmployeeBean;
+import com.bank.web.domains.MemberBean;
 import com.bank.web.pool.Constants;
 
 public class MemberDaoImpl implements MemberDao{
@@ -118,7 +119,7 @@ public class MemberDaoImpl implements MemberDao{
 						, temp.getName()
 						, temp.getSsn()
 						, temp.getCredit()));
-				System.out.println(temp.getSsn());
+				System.out.println(temp.getPass());
 			}
 			writer.flush();
 			writer.close();

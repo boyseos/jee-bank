@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bank.web.domains.CustomerBean;
 import com.bank.web.domains.EmployeeBean;
+import com.bank.web.domains.MemberBean;
 
 public interface MemberDao {
 	public void insertMember(CustomerBean param);

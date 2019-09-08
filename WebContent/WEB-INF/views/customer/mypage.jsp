@@ -10,7 +10,7 @@
 </head>
 <body>
 로그인페이지
-	<h2>${customer.name} 로그인페이지</h2> <br />
+	<h2>${customer.name} ${page}페이지</h2> <br />
 	<h3>아이디	${customer.id}</h3> <br />
 	<h4>비번		${customer.pass}</h4> <br />
 	<h4>민번		${customer.ssn}</h4> <br />
@@ -18,7 +18,7 @@
 	<form id="loginpage" action="<%=request.getContextPath()%>/customer.do">
 		비번변경 (구비번,신비번)<input type="text" name="changepass" /> <br/>			
 		회원탈퇴 (pass)<input type="text" name="deletemember" /> <br/>
-		<input type="hidden" name="id" value="${customer.id}" />
+		<input type="hidden" name="page" value="login" />
 		<input type="hidden" name="action" value="loginpage" />
 		<input type="submit" value="멤버정보변경" />
 	</form>

@@ -15,11 +15,12 @@ public interface MemberService {
 	public List<MemberBean> findByName(String name);
 	public MemberBean findById(String id);
 	public boolean login(MemberBean param);
-	public CustomerBean loginD(MemberBean param);
 	public int countCustomers();
 	public int countAdmins();
 	public boolean existId(String id);
 	public void updatePass(MemberBean param);
 	public boolean deleteMember(MemberBean param);
 	public boolean nullCheck(MemberBean param);
+	public MemberBean getLoginMember();
+	public MemberBean memberKindCheck(int index);
 }

@@ -16,7 +16,7 @@ public class MemberServiceImpl implements MemberService{
 	public MemberDao dao;
 	private List<CustomerBean> cMember;
 	private List<EmployeeBean> eMember;
-	private MemberBean loginMember;
+	private static int loginIndex, findIndex;
 	
 	public MemberServiceImpl() {
 		dao = new MemberDaoImpl();
@@ -81,11 +81,13 @@ public class MemberServiceImpl implements MemberService{
 	public MemberBean findById(String id) {
 		for(CustomerBean c : cMember) {
 			if(id.equals(c.getId())) {
+				findIndex = cMember.indexOf(c) + 1;
 				return c; // 추후 배울 시스템에선 바로 리턴 때리는것이 안좋을지 모르나. 현재 상황에선 이게 효율적임..
 			}
 		}
 		for(EmployeeBean e : eMember) {
 			if(id.equals(e.getId())) {
+				findIndex = -eMember.indexOf(e) - 1;
 				return e;
 			}
 		}
@@ -100,7 +102,8 @@ public class MemberServiceImpl implements MemberService{
 			return result;
 		}
 		if(m.getPass().equals(param.getPass())) {
-			loginMember = m;
+			loginIndex = findIndex;
+			System.out.print(memberKindCheck(loginIndex).getId() +" 로그인");
 			result = true;
 		}
 		return result;
@@ -108,31 +111,35 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public boolean existId(String id) {
-		MemberBean m = findById(id);
-		return eMember.contains(m) || cMember.contains(m);
+		return findById(id) != null;
 	}
 
 	@Override
 	public void updatePass(MemberBean param) {
-		if (loginMember.getPass().equals(param.getPass().split(",")[0])) {
-			loginMember.setPass(param.getPass().split(",")[1]);
+		if (memberKindCheck(loginIndex).getPass()
+				.equals(param.getPass().split(",")[0])) {
+			memberKindCheck(loginIndex)
+			.setPass(param.getPass().split(",")[1]);
 			dao.reWrite(cMember);
-			System.out.println("안오냐?");
 		}
 	}
 
 	@Override
 	public boolean deleteMember(MemberBean param) {
 		boolean result = false;
-		if(eMember.contains(loginMember)) {
-			eMember.remove(loginMember);
-			loginMember = null;
-			result = true;
-		}else if(cMember.contains(loginMember)) {
-			cMember.remove(loginMember);
-			loginMember = null;
-			result = true;
+		if (!memberKindCheck(loginIndex).getPass()
+				.equals(param.getPass())){
+			return result;
 		}
+		if(cMember.remove(memberKindCheck(loginIndex))) {
+			result = true;
+			dao.reWrite(cMember);
+		}else {
+			eMember.remove(loginIndex +1);
+			result = true;
+			//dao.reWrite(eMember);
+		}
+		loginIndex = 0;
 		return result;
 	}
 
@@ -157,15 +164,19 @@ public class MemberServiceImpl implements MemberService{
 		return eMember;
 	}
 
-	@Override
-	public CustomerBean loginD(MemberBean param) {
-		// TODO Auto-generated method stub
-		return null;
+	public MemberBean getLoginMember() {
+		return memberKindCheck(loginIndex);
 	}
 
 	@Override
 	public boolean nullCheck(MemberBean param) {
 		return param == null;
+	}
+	
+	public MemberBean memberKindCheck(int index) {
+		return index != 0 ? 
+				index > 0 ? cMember.get(index-1) : eMember.get(index+1)
+						: null;
 	}
 
 }

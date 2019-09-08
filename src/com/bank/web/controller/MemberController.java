@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bank.web.command.*;
+import com.bank.web.commands.*;
 import com.bank.web.domains.CustomerBean;
 import com.bank.web.domains.EmployeeBean;
 import com.bank.web.domains.MemberBean;
@@ -23,32 +23,23 @@ public class MemberController extends HttpServlet {
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		CustomerBean cm = null;
+		CustomerBean cm = new CustomerBean();
 		EmployeeBean em = null;
-		MemberBean mb = null;
+		MemberBean mb = new MemberBean();
 		MemberService service = new MemberServiceImpl();
 		Receiver.init(request);
-		//Receiver.cmd.execute();
-//		if(Receiver.cmd.getAction()==null) {
-//			Receiver.cmd.setPage();
-//		}
 		
 		switch (Receiver.cmd.getAction()) {
 		case "login":
-			mb = new MemberBean();
 			mb.setId(request.getParameter("id"));
 			mb.setPass(request.getParameter("pass"));
 			if(service.login(mb)) {
-				request.setAttribute("customer",service.findById(mb.getId()));
+				request.setAttribute("customer",service.getLoginMember());
 			}else {
-				Receiver.cmd.setView(
-						String.format(Constants.VIEW_PATH
-								,Receiver.cmd.getDomain()
-								,"login"));
+				Receiver.cmd.setPage("login");
 			}
 			break;
 		case "join":
-			cm = new CustomerBean();
 			cm.setId(request.getParameter("id"));
 			cm.setPass(request.getParameter("pass"));
 			cm.setName(request.getParameter("name"));
@@ -61,20 +52,17 @@ public class MemberController extends HttpServlet {
 			break;
 		case "loginpage":
 			String changePass = request.getParameter("changepass")
-			,deleteMember = request.getParameter("deletemember")
-			,id = request.getParameter("id");
-			mb = service.findById(id);
-			System.out.printf("changePass = %s\n"
-					+ "id = %s\n", changePass ,id);
-			if(changePass != null) {
-				mb.setPass(mb.getPass()+","+changePass);
+			,deleteMember = request.getParameter("deletemember");
+			mb.setPass(changePass);
+			if(changePass != "") {
 				service.updatePass(mb);
-			}else if(deleteMember != null) {
-				
+			}else if(deleteMember != "") {
+				mb.setPass(deleteMember);
+				service.deleteMember(mb);
 			}
 			break;
 		}
-		Sender.forward(request, response);
+		Sender.forward(response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 

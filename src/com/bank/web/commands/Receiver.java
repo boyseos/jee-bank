@@ -1,12 +1,12 @@
-package com.bank.web.command;
+package com.bank.web.commands;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class Receiver {
-	public static Command cmd = new Command();
+	public static Command cmd = null;
 	public static void init(HttpServletRequest request) {
 		try {
-			cmd = new Movecommand(request);
+			cmd = new MoveCommand(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
