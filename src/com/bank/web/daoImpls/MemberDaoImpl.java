@@ -2,8 +2,10 @@ package com.bank.web.daoImpls;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +20,7 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public void insertMember(CustomerBean param) {
 		try {
-			BufferedWriter writer = new BufferedWriter(
-			new FileWriter(new File(new Constants().SETFILE_PATH+"customers0905.txt"),true));
+			BufferedWriter writer = writer("customers0905.txt",true);
 			writer.write(String.format("%s_%s_%s_%s_%s\n"
 					,param.getId()
 					,param.getPass()
@@ -36,8 +37,7 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public void insertEmployee(EmployeeBean param) {
 		try {
-			BufferedWriter writer = new BufferedWriter(
-			new FileWriter(new File(new Constants().SETFILE_PATH+"employees0905.txt"),true));
+			BufferedWriter writer = writer("employees0905.txt",true);
 			writer.write(String.format("%s_%s_%s_%s_%s\n"
 					,param.getId()
 					,param.getPass()
@@ -52,19 +52,12 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public CustomerBean login(CustomerBean param) {
-		return null;
-	}
-
-	@Override
 	public List<CustomerBean> getCustomerFile() {
 		List<CustomerBean> cba = new ArrayList<CustomerBean>();
 		try {
 			String result = "";
 			CustomerBean temp = null;
-			BufferedReader reader = new BufferedReader(
-					new FileReader(new File(new Constants()
-							.SETFILE_PATH+"customers0905.txt")));
+			BufferedReader reader = reader("customers0905.txt");
 			while((result = reader.readLine()) != null) {
 				temp = new CustomerBean();
 				 temp.setId(result.split("_")[0]);
@@ -88,9 +81,7 @@ public class MemberDaoImpl implements MemberDao{
 		try {
 			String result = "";
 			EmployeeBean temp = null;
-			BufferedReader reader = new BufferedReader(
-					new FileReader(new File(new Constants()
-							.SETFILE_PATH+"employees0905.txt")));
+			BufferedReader reader = reader("employees0905.txt");
 			while((result = reader.readLine()) != null) {
 				temp = new EmployeeBean();
 				 temp.setId(result.split("_")[0]);
@@ -109,9 +100,7 @@ public class MemberDaoImpl implements MemberDao{
 	
 	public void reWrite(List<CustomerBean> param) {
 		try {
-			BufferedWriter writer = new BufferedWriter(
-					new FileWriter(new File(new Constants()
-							.SETFILE_PATH + "customers0905.txt")));
+			BufferedWriter writer = writer("customers0905.txt",false);
 			for (CustomerBean temp : param) {
 				writer.write(String.format("%s_%s_%s_%s_%s\n"
 						, temp.getId()
@@ -119,7 +108,6 @@ public class MemberDaoImpl implements MemberDao{
 						, temp.getName()
 						, temp.getSsn()
 						, temp.getCredit()));
-				System.out.println(temp.getPass());
 			}
 			writer.flush();
 			writer.close();
@@ -127,5 +115,17 @@ public class MemberDaoImpl implements MemberDao{
 			e.printStackTrace();
 		}
 	}
+	
+	public BufferedWriter writer(String file, boolean add) throws Exception {
+		return new BufferedWriter(
+				new FileWriter(new File(Constants
+						.SETFILE_PATH + file),add));
+	}
 
+	@Override
+	public BufferedReader reader(String file) throws Exception {
+		return new BufferedReader(
+				new FileReader(new File(Constants
+						.SETFILE_PATH+file)));
+	}
 }

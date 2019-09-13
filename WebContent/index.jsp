@@ -25,11 +25,9 @@
 	</div>
 	<script>
 	$('#btn').click(function(){
-		alert('예약석');
 		location.assign('<%=request.getContextPath()%>/customer.do?page=login');
 	});
 	$('#joinlink').click(function(){
-		alert('만석');
 		location.assign('<%=request.getContextPath()%>/customer.do?page=join');
 	});
 	</script>

@@ -174,9 +174,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	public MemberBean memberKindCheck(int index) {
-		return index != 0 ? 
-				index > 0 ? cMember.get(index-1) : eMember.get(index+1)
-						: null;
+		return index == 0 ? null :
+				index > 0 ? cMember.get(index-1) : eMember.get(index+1);
 	}
 
 }

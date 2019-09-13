@@ -15,7 +15,7 @@ public class AccountDaoImpl implements AccountDao{
 	@Override
 	public void setFile(List<AccountBean> param) {		
 		try {
-			File file = new File(new Constants().SETFILE_PATH + "list.txt");
+			File file = new File(Constants.SETFILE_PATH + "list.txt");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
 			String msg = "";
 			for(AccountBean a : param) {

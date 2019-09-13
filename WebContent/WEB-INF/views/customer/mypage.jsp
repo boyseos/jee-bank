@@ -15,11 +15,17 @@
 	<h4>비번		${customer.pass}</h4> <br />
 	<h4>민번		${customer.ssn}</h4> <br />
 	<h4>신용도	${customer.credit}</h4> <br />
-	<form id="loginpage" action="<%=request.getContextPath()%>/customer.do">
-		비번변경 (구비번,신비번)<input type="text" name="changepass" /> <br/>			
-		회원탈퇴 (pass)<input type="text" name="deletemember" /> <br/>
+	<form id="updatepass" action="<%=request.getContextPath()%>/customer.do">
+		비번변경 (구비번,신비번)<input type="text" name="changepass" />		
 		<input type="hidden" name="page" value="login" />
-		<input type="hidden" name="action" value="loginpage" />
+		<input type="hidden" name="action" value="update" />
+		<input type="submit" value="멤버정보변경" />
+	</form>
+	<br>
+	<form id="deletemember" action="<%=request.getContextPath()%>/customer.do">		
+		회원탈퇴 (pass)<input type="text" name="deletemember" />
+		<input type="hidden" name="page" value="index" />
+		<input type="hidden" name="action" value="delete" />
 		<input type="submit" value="멤버정보변경" />
 	</form>
 	<form id="accountpage" action="<%=request.getContextPath()%>/account.do">
@@ -30,9 +36,9 @@
 		<input type="submit" value = "개설"/>
 	</form>
 	<script>
-	$('#loginpage').submit(function(){
-		
-	});
+	$('#updatepass').submit(function());
+	
+	$('#deletemember').submit(function());
 	</script>
 </body>
 </html>

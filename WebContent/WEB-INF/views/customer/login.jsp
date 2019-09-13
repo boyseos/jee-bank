@@ -10,6 +10,7 @@
 <body>
 	<div>
 		<h2>${page} 페이지</h2>
+		<h1>${action}</h1>
 		<form id="login_form"   action="<%=request.getContextPath()%>/customer.do">
 			아이디 <input type="text" name="id" /> <br /> 
 			비밀번호<input type="text" name="pass" /> <br />
@@ -20,7 +21,6 @@
 	</div>
 	<script>
 	$('#login_form').submit(function(){
-		alert('전송');
 	});
 	</script>
 </body>

@@ -25,7 +25,6 @@
 </div>
 <script>
 $('#customer_form').submit(function(){
-	alert('통장테스트');
 });
 </script>
 </body>
